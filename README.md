@@ -1,6 +1,9 @@
 # Projetoempresas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8.
+## Para esse projeto eu desenvolvi uma API para o back-end utilizando .NET e o padrão DDD
+### Repositório da API: https://github.com/fernandoborel/ApiEmpresas
+
+## This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8.
 
 ## Development server
 
