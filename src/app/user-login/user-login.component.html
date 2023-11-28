@@ -1,0 +1,38 @@
+<div class="row mt-5">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="https://png.pngtree.com/png-vector/20190919/ourlarge/pngtree-user-login-or-authenticate-icon-on-gray-background-flat-icon-ve-png-image_1742031.jpg" class="img-fluid"/>
+                    <h5>Acesso ao Sistema</h5>
+                </div>
+
+                <hr/>
+                <form>
+                    <div class="mb-3">
+                        <label for="">E-mail de acesso:</label>
+                        <input type="text" class="form-control" placeholder="Digite o seu e-mail aqui"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Senha de acesso:</label>
+                        <input type="password" class="form-control" placeholder="Digite sua senha aqui"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-grid">
+                            <input type="submit" value="Acessar Sistema" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-grid">
+                            <button class="btn btn-light" [routerLink]="['/user-register']">
+                                Não possui conta? <strong>Cadastre-se aqui!</strong>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
