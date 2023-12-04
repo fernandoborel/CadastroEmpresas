@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-login',
@@ -6,5 +9,52 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent {
+  
+  mensagem_sucesso : string = '';
+  mensagem_erro : string = '';
+  
+  constructor(
+    private httpClient : HttpClient
+  ){}
 
+  ngOnInit() : void{}
+  
+  formLogin = new FormGroup({
+    email : new FormControl('', [Validators.required, Validators.email]),
+    senha : new FormControl('', [Validators.required])
+  });
+
+  get form() : any {
+    return this.formLogin.controls;
+  }
+
+  onSubmit() : void{
+    this.limparMensagens();
+
+    this.httpClient.post(environment.apiUrl + '/login', this.formLogin.value)
+      .subscribe(
+        (data : any) => {
+          this.mensagem_sucesso = data.message;
+          this.formLogin.reset();
+
+          //salvando os dados no LocalStorage
+          localStorage.setItem('AUTH_USER', JSON.stringify(data));
+        },
+        e => {
+          switch(e.status){
+            case 401:
+              this.mensagem_erro = e.error.message;
+              break;
+            default:
+              this.mensagem_erro = "Ocorreu um erro ao autenticar o usuário, tente novamente."
+              break;
+          }
+        }
+      );
+  }
+
+  limparMensagens() : void {
+    this.mensagem_sucesso = '';
+    this.mensagem_erro = '';
+  }
 }
