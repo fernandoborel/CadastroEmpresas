@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user-register',
@@ -16,7 +17,8 @@ export class UserRegisterComponent implements OnInit {
 
   //construtor da classe
   constructor(
-    private httpClient: HttpClient //injeção de dependência
+    private httpClient: HttpClient, //injeção de dependência
+    private spinnerService : NgxSpinnerService
   ) {
 
   }
