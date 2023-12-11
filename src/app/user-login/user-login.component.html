@@ -1,3 +1,5 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
 <div class="row mt-5">
     <div class="col-md-4 offset-md-4">
         <div class="card">
@@ -39,9 +41,14 @@
                     </div>
 
                     <div class="mb-3">
+                        
                         <label>Senha de acesso:</label>
                         <input type="password" class="form-control" formControlName="senha"
                             placeholder="Digite sua senha aqui" />
+
+                        <div class="text-end">
+                            <a [routerLink]="['/user-password']">Esqueci minha Senha.</a>
+                        </div>
 
                         <div class="text-danger" *ngIf="form.senha.touched && form.senha.invalid">
                             <div *ngIf="form.senha.errors.required">

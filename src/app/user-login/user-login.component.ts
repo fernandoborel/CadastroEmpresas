@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-user-login',
@@ -14,7 +16,8 @@ export class UserLoginComponent {
   mensagem_erro : string = '';
   
   constructor(
-    private httpClient : HttpClient
+    private httpClient : HttpClient,
+    private spinnerService : NgxSpinnerService
   ){}
 
   ngOnInit() : void{}
@@ -29,11 +32,17 @@ export class UserLoginComponent {
   }
 
   onSubmit() : void{
+
+    this.spinnerService.show();
+
     this.limparMensagens();
 
     this.httpClient.post(environment.apiUrl + '/login', this.formLogin.value)
       .subscribe(
         (data : any) => {
+
+          this.spinnerService.hide();
+
           this.mensagem_sucesso = data.message;
           this.formLogin.reset();
 
@@ -41,6 +50,8 @@ export class UserLoginComponent {
           localStorage.setItem('AUTH_USER', JSON.stringify(data));
         },
         e => {
+          this.spinnerService.hide();
+
           switch(e.status){
             case 401:
               this.mensagem_erro = e.error.message;

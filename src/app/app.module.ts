@@ -9,12 +9,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { UserPasswordComponent } from './user-password/user-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserLoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    UserPasswordComponent
   ],
   imports: [
     BrowserModule,
