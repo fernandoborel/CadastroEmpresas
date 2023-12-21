@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
 
 @Component({
   selector: 'app-user-login',
@@ -17,7 +17,8 @@ export class UserLoginComponent {
   
   constructor(
     private httpClient : HttpClient,
-    private spinnerService : NgxSpinnerService
+    private spinnerService : NgxSpinnerService,
+    private authenticationHelper : AuthenticationHelper
   ){}
 
   ngOnInit() : void{}

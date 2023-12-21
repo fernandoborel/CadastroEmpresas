@@ -32,6 +32,7 @@ export class UserPasswordComponent {
 
 
   onSubmit(): void{
+    this.limparMensagens();
     this.spinnerService.show();
 
     this.httpClient.post(environment.apiUrl + "/PasswordRecover", this.formPassword.value)
