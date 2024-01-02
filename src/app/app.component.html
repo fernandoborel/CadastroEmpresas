@@ -1,22 +1,59 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><strong>Projeto Empresas</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <div *ngIf="!isLoggedIn" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="">Acesso ao Sistema</a>
+            <a class="nav-link" aria-current="page" routerLink="">
+            Acesso ao Sistema</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="user-register">Crie sua Conta</a>
+            <a class="nav-link" routerLink="user-register">
+             Crie sua Conta</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="user-password">Esqueci minha Senha</a>
+            <a class="nav-link" routerLink="user-password">
+             Esqueci minha Senha</a>
           </li>
         </ul>
       </div>
+            
+      <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Gerenciar Empresas
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="empresas-cadastro">Cadastrar Empresas</a></li>
+              <li><a class="dropdown-item" routerLink="empresas-consulta">Consultar Empresas</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Gerenciar Funcionários
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="funcionarios-cadastro">Cadastrar Funcionários</a></li>
+              <li><a class="dropdown-item" routerLink="funcionarios-consulta">Consultar Funcionários</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="isLoggedIn" class="collapse navbar-collapse">
+        <p class="navbar-text">
+          <span class="welcome">Usuário: <strong class="text-white">{{usuario}}</strong></span>
+          <br/>
+          <button (click)="logout()" class="btn btn-sm btn-outline-light mt-1">Sair do Sistema</button>
+        </p>
+      </div>
+
     </div>
   </nav>
   

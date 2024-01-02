@@ -1,10 +1,15 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthenticationGuard } from './guards/authentication.guard';
+import { AuthenticationInteceptor } from './interceptors/authentication.interceptor';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+export const options: Partial<IConfig | null> | (() => Partial<IConfig>) = null;
 
 import { AppComponent } from './app.component';
 import { UserLoginComponent } from './components/users/user-login/user-login.component';
@@ -37,10 +42,17 @@ import { FuncionariosEdicaoComponent } from './components/funcionarios/funcionar
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxMaskModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    AuthenticationGuard,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInteceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

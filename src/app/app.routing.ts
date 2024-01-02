@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
+import { AuthenticationGuard } from "./guards/authentication.guard";
 
 //importando os componentes que serão mapeados
 import { UserLoginComponent } from "./components/users/user-login/user-login.component";
@@ -20,13 +21,13 @@ const routes: Routes = [
     { path: 'user-register', component: UserRegisterComponent },
     { path: 'user-password', component: UserPasswordComponent},
 
-    { path: 'empresas-cadastro', component: EmpresasCadastroComponent},
-    { path: 'empresas-consulta', component: EmpresasConsultaComponent},
-    { path: 'empresas-edicao/:idEmpresa', component: EmpresasEdicaoComponent},
+    { path: 'empresas-cadastro', component: EmpresasCadastroComponent, canActivate: [AuthenticationGuard]},
+    { path: 'empresas-consulta', component: EmpresasConsultaComponent, canActivate: [AuthenticationGuard]},
+    { path: 'empresas-edicao/:idEmpresa', component: EmpresasEdicaoComponent, canActivate: [AuthenticationGuard]},
 
-    {path: 'funcionarios-cadastro', component: FuncionariosCadastroComponent},
-    {path: 'funcionarios-consulta', component: FuncionariosConsultaComponent},
-    {path: 'funcionarios-edicao/idFuncionario', component: FuncionariosEdicaoComponent}
+    {path: 'funcionarios-cadastro', component: FuncionariosCadastroComponent, canActivate: [AuthenticationGuard]},
+    {path: 'funcionarios-consulta', component: FuncionariosConsultaComponent, canActivate: [AuthenticationGuard]},
+    {path: 'funcionarios-edicao/idFuncionario', component: FuncionariosEdicaoComponent, canActivate: [AuthenticationGuard]}
 ];
 
 //registrando as rotas e o módulo

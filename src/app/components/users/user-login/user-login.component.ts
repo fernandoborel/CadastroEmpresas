@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
@@ -10,63 +10,71 @@ import { AuthenticationHelper } from 'src/app/helpers/authentication.helper';
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.css']
 })
-export class UserLoginComponent {
-  
-  mensagem_sucesso : string = '';
-  mensagem_erro : string = '';
-  
-  constructor(
-    private httpClient : HttpClient,
-    private spinnerService : NgxSpinnerService,
-    private authenticationHelper : AuthenticationHelper
-  ){}
+export class UserLoginComponent implements OnInit {
 
-  ngOnInit() : void{}
-  
+  mensagem_sucesso: string = '';
+  mensagem_erro: string = '';
+
+  //inicialização por injeção de dependência
+  constructor(
+    private httpClient: HttpClient,
+    private spinnerService: NgxSpinnerService,
+    private authenticationHelper: AuthenticationHelper
+  ) {
+    if (this.authenticationHelper.getAuthData()) {
+      window.location.href = '/empresas-consulta';
+    }
+  }
+
+  ngOnInit(): void {
+  }
+
   formLogin = new FormGroup({
-    email : new FormControl('', [Validators.required, Validators.email]),
-    senha : new FormControl('', [Validators.required])
+    email: new FormControl('', [Validators.required, Validators.email]),
+    senha: new FormControl('', [Validators.required])
   });
 
-  get form() : any {
+  get form(): any {
     return this.formLogin.controls;
   }
 
-  onSubmit() : void{
+  onSubmit(): void {
 
     this.spinnerService.show();
 
     this.limparMensagens();
 
-    this.httpClient.post(environment.apiUrl + '/login', this.formLogin.value)
+    this.httpClient.post(environment.apiUrl + "/login", this.formLogin.value)
       .subscribe(
-        (data : any) => {
+        {
+          next: (data: any) => {
 
-          this.spinnerService.hide();
+            this.formLogin.reset();
 
-          this.mensagem_sucesso = data.message;
-          this.formLogin.reset();
+            this.authenticationHelper.signIn(data);
 
-          //salvando os dados no LocalStorage
-          localStorage.setItem('AUTH_USER', JSON.stringify(data));
-        },
-        e => {
-          this.spinnerService.hide();
+            window.location.href = '/empresas-consulta';
+          },
+          error: e => {
+            this.spinnerService.hide();
 
-          switch(e.status){
-            case 401:
-              this.mensagem_erro = e.error.message;
-              break;
-            default:
-              this.mensagem_erro = "Ocorreu um erro ao autenticar o usuário, tente novamente."
-              break;
+            switch (e.status) {
+              case 401:
+                this.mensagem_erro = e.error.message;
+                break;
+
+              default:
+                this.mensagem_erro = "Ocorreu um erro ao autenticar o usuário, tente novamente.";
+                break;
+            }
           }
         }
       );
   }
 
-  limparMensagens() : void {
+  limparMensagens(): void {
     this.mensagem_sucesso = '';
     this.mensagem_erro = '';
   }
+
 }
