@@ -11,6 +11,9 @@ import { environment } from 'src/environments/environment';
 export class EmpresasConsultaComponent {
   empresas : any[] = []
 
+  pagina: number = 1; //paginação
+  filtro: any = {nomeFantasia: ''}; //filtro
+
   constructor(
     private httpClient: HttpClient,
     private spinner: NgxSpinnerService
@@ -27,5 +30,10 @@ export class EmpresasConsultaComponent {
           this.spinner.hide();
         }
       );
+  }
+
+  //paginação do componente
+  handlePageChange(event: any): void {
+    this.pagina = event;
   }
 }

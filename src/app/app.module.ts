@@ -8,6 +8,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { AuthenticationInteceptor } from './interceptors/authentication.interceptor';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 export const options: Partial<IConfig | null> | (() => Partial<IConfig>) = null;
 
@@ -43,7 +45,9 @@ import { FuncionariosEdicaoComponent } from './components/funcionarios/funcionar
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgxPaginationModule,
+    FilterPipeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
