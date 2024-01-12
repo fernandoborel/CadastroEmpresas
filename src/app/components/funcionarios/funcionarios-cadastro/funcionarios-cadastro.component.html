@@ -1,1 +1,100 @@
-<p>funcionarios-cadastro works!</p>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<div *ngIf="mensagem_sucesso" class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
+    <strong>Sucesso!</strong> {{mensagem_sucesso}}
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
+<div *ngIf="mensagem_erro" class="alert alert-danger alert-dismissible fade show mt-2 mb-2" role="alert">
+    <strong>Erro!</strong> {{mensagem_erro}}
+    <button type="button" class="btn-close" aria-label="Close" (click)="limparMensagens()"></button>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cadastro de Funcionários</h5>
+                <p class="card-text">Preencha os campos para incluir um funcionário</p>
+                <hr />
+
+                <form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                            <label>Nome do Funcionário:</label>
+                            <input type="text" class="form-control" placeholder="Digite aqui"
+                                formControlName="nome" />
+                            <span class="text-danger" *ngIf="form.nome.touched && form.nome.invalid">
+                                <span *ngIf="form.nome.errors.required">
+                                    Por favor, informe o nome do funcionário.
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Matrícula:</label>
+                            <input type="text" class="form-control" placeholder="Digite aqui"
+                                formControlName="matricula" />
+                            <span class="text-danger" *ngIf="form.matricula.touched && form.matricula.invalid">
+                                <span *ngIf="form.matricula.errors.required">
+                                    Por favor, informe a matrícula do funcionário.
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>CPF:</label>
+                            <input type="text" class="form-control" placeholder="Digite aqui"
+                                formControlName="cpf" mask="000.000.000-00"/>
+                            <span class="text-danger" *ngIf="form.cpf.touched && form.cpf.invalid">
+                                <span *ngIf="form.cpf.errors.required">
+                                    Por favor, informe o cpf do funcionário.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-3">
+                            <label>Data de admissão:</label>
+                            <input type="date" class="form-control" placeholder="Digite aqui"
+                                formControlName="dataAdmissao" />
+                            <span class="text-danger" *ngIf="form.dataAdmissao.touched && form.dataAdmissao.invalid">
+                                <span *ngIf="form.dataAdmissao.errors.required">
+                                    Por favor, informe a data de admissão do funcionário.
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label>Selecione a empresa do funcionário:</label>
+                            <select class="form-select" formControlName="idEmpresa">
+                                <option value="">Escolha uma opção</option>
+                                <option *ngFor="let e of empresas" value="{{e.idEmpresa}}">
+                                    {{e.nomeFantasia}} ({{e.razaoSocial}}) - {{e.cnpj | mask: '00.000.000/0000-00'}}
+                                </option>
+                            </select>   
+                            <span class="text-danger" *ngIf="form.idEmpresa.touched && form.idEmpresa.invalid">
+                                <span *ngIf="form.idEmpresa.errors.required">
+                                    Por favor, selecione a empresa do funcionário.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <input type="submit" value="Realizar Cadastro" class="btn btn-success"
+                                [disabled]="!formCadastro.valid"/>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
